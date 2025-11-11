@@ -17,11 +17,30 @@ $(document).ready(function () {
       status: "todo",
     };
 
-    $("#todo").append(createTaskCard(newTask));
+    const card = $(createTaskCard(newTask));
+    styleTaskCard(card, newTask.dueDate);
+    $("#todo").append(card);
+    saveTasks();
+
     $("#taskForm")[0].reset(); // clear the form
     $("#taskModal").modal("hide"); // close the modal
-    saveTasks();
   });
+
+  function styleTaskCard(card, dueDate) {
+    const now = dayjs();
+    const due = dayjs(dueDate);
+
+    // reset background
+    card.removeClass(function (index, className) {
+      return (className.match(/(^|\s)bg-\S+/g) || []).join(" ");
+    });
+
+    if (due.isBefore(now, "day")) {
+      card.addClass("bg-danger text-white");
+    } else if (due.diff(now, "day") <= 2) {
+      card.addClass("bg-warning");
+    }
+  }
 
   function createTaskCard(task) {
     return `
@@ -29,7 +48,9 @@ $(document).ready(function () {
       <div class="card-body">
         <h5 class="card-title">${task.title}</h5>
         <p class="card-text">${task.description}</p>
-        <p class="text-muted small mb-1">Due: ${task.dueDate}</p>
+        <p class="text-muted small mb-1">Due: <span>${dayjs(
+          task.dueDate
+        ).format("MMM D, YYYY")}</span></p>
         <button class="btn btn-sm btn-danger delete-task">Delete</button>
       </div>
     </div>
@@ -40,7 +61,9 @@ $(document).ready(function () {
   function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.forEach((task) => {
-      $(`#${task.status}`).append(createTaskCard(task));
+      const card = $(createTaskCard(task));
+      styleTaskCard(card, task.dueDate);
+      $(`#${task.status}`).append(card);
     });
   }
 
@@ -59,4 +82,5 @@ $(document).ready(function () {
   }
 
   loadTasks();
+  saveTasks();
 });
