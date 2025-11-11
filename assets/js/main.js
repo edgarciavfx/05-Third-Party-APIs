@@ -67,6 +67,19 @@ $(document).ready(function () {
     });
   }
 
+  // Enable drag & drop
+  $(".task-column").sortable({
+    connectWith: ".task-column",
+    placeholder: "task-placeholder",
+    start: function (event, ui) {
+      ui.item.addClass("dragging");
+    },
+    stop: function (event, ui) {
+      ui.item.removeClass("dragging");
+      saveTasks(); // persist new order & status
+    },
+  });
+
   // Save tasks to localStorage
   function saveTasks() {
     const tasks = [];
