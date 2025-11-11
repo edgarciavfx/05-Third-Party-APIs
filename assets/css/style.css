@@ -1,0 +1,8 @@
+.task-column {
+  min-height: 60vh;
+  overflow-y: auto;
+}
+
+.card {
+  cursor: grab;
+}

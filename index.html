@@ -27,6 +27,7 @@
   <!-- BODY -->
 
   <body>
+    <!-- Add Task Board -->
     <div class="container py-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3">Task Board</h1>
@@ -42,7 +43,18 @@
       <div class="row">
         <div class="col-md-4">
           <h2 class="h5 text-center">To Do</h2>
-          <div id="todo" class="task-column p-2 bg-light rounded"></div>
+          <div id="todo" class="task-column p-2 bg-light rounded">
+            <div class="card mb-2">
+              <div class="card-body">
+                <h5 class="card-title">Sample Task</h5>
+                <p class="card-text">This is a demo description.</p>
+                <p class="text-muted small mb-1">
+                  Due: <span>2025-11-12</span>
+                </p>
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="col-md-4">
