@@ -6,3 +6,14 @@
 .card {
   cursor: grab;
 }
+
+.task-placeholder {
+  border: 2px dashed #999;
+  background: #f8f9fa;
+  min-height: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.dragging {
+  opacity: 0.6;
+}
