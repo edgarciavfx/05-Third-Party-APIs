@@ -20,6 +20,7 @@ $(document).ready(function () {
     $("#todo").append(createTaskCard(newTask));
     $("#taskForm")[0].reset(); // clear the form
     $("#taskModal").modal("hide"); // close the modal
+    saveTasks();
   });
 
   function createTaskCard(task) {
@@ -34,4 +35,28 @@ $(document).ready(function () {
     </div>
   `;
   }
+
+  // Load tasks from localStorage
+  function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach((task) => {
+      $(`#${task.status}`).append(createTaskCard(task));
+    });
+  }
+
+  // Save tasks to localStorage
+  function saveTasks() {
+    const tasks = [];
+    $(".card").each(function () {
+      const id = $(this).data("id");
+      const title = $(this).find(".card-title").text();
+      const description = $(this).find(".card-text").text();
+      const dueDate = $(this).find(".text-muted span").text();
+      const status = $(this).closest(".task-column").attr("id");
+      tasks.push({ id, title, description, dueDate, status });
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  loadTasks();
 });
