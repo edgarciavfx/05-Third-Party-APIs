@@ -77,6 +77,9 @@ $(document).ready(function () {
     stop: function (event, ui) {
       ui.item.removeClass("dragging");
       saveTasks(); // persist new order & status
+      JSON.parse(localStorage.tasks).forEach((data) =>
+        console.log(data.status)
+      );
     },
   });
 
